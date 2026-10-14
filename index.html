@@ -51,9 +51,14 @@ body.locked{overflow:hidden;height:100vh;height:100dvh}
   text-shadow:1px 1px 0 rgba(255,255,255,.8);transition:opacity .5s;animation:blink 2.6s ease-in-out infinite}
 @keyframes blink{50%{opacity:.4}}
 #cover.untie .tp{opacity:0;animation:none}
-.bow{position:absolute;left:0;top:50%;width:100%;transform:translateY(-34%);z-index:4;pointer-events:none;
-  transition:transform 1.3s cubic-bezier(.55,0,.75,.3),opacity .7s ease .6s}
-#cover.untie .bow{transform:translateY(40%) scale(.96);opacity:0}
+.bow{position:absolute;left:0;top:50%;width:100%;transform:translateY(-34%);z-index:4;pointer-events:none;transform-origin:50% 34%;
+  transition:opacity .6s ease}
+@keyframes untie{0%{transform:translateY(-34%)}
+  14%{transform:translateY(-31%) scale(1.04,.97)}
+  30%{transform:translateY(-30%) scale(.9,1.04)}
+  100%{transform:translateY(58%) scale(.82,1.08)}}
+#cover.untie .bow{animation:untie 1.5s cubic-bezier(.5,0,.7,.4) forwards}
+#cover.open .bow{opacity:0}
 
 /* ============ BARRAS ============ */
 .bar{position:fixed;top:0;left:0;right:0;z-index:40;height:calc(var(--bar) + env(safe-area-inset-top,0px));
@@ -378,9 +383,9 @@ $('#openBtn').addEventListener('click', () => {
   const c = $('#cover');
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){ finish(); return; }
   c.classList.add('untie');
-  setTimeout(() => c.classList.add('open'), 900);
-  setTimeout(() => c.classList.add('zoom'), 3000);
-  setTimeout(finish, 4500);
+  setTimeout(() => c.classList.add('open'), 1900);
+  setTimeout(() => c.classList.add('zoom'), 4000);
+  setTimeout(finish, 5500);
 });
 
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
