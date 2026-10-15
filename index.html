@@ -65,6 +65,11 @@ body.locked{overflow:hidden;height:100vh;height:100dvh}
 body.ready .bar{transform:none}
 .mono{width:36px;height:36px;border-radius:50%;border:1px solid rgba(43,66,49,.45);display:grid;place-items:center;
   font:600 .78rem var(--serif);letter-spacing:.04em;color:var(--on-slate);text-decoration:none}
+.snd{width:36px;height:36px;border-radius:50%;border:1px solid rgba(43,66,49,.45);background:none;color:var(--on-slate);cursor:pointer;display:grid;place-items:center;margin-left:auto;margin-right:6px}
+.snd[hidden]{display:none}
+.snd svg{width:17px;height:17px}
+.snd .off{display:none}.snd.muted .on{display:none}.snd.muted .off{display:block}
+.snd:not(.muted) .on{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.55}}
 .burger{background:none;border:0;width:42px;height:42px;cursor:pointer;display:grid;place-content:center;gap:5px}
 .burger span{display:block;width:22px;height:1.5px;background:var(--on-slate);transition:transform .3s,opacity .3s}
 .burger.x span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
@@ -227,8 +232,10 @@ const CONFIG = {
   </button>
 </div>
 
+<audio id="song" src="cancion.mp3" preload="auto" loop></audio>
 <header class="bar">
   <a class="mono" href="#inicio" id="mono" aria-label="Inicio"></a>
+  <button class="snd" id="snd" aria-label="Pausar música" hidden><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l12 7-12 7z" fill="currentColor"/></svg></button>
   <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 <nav class="drawer" id="drawer" aria-label="Menú">
@@ -377,12 +384,20 @@ let opened = false;
 function finish(){ $('#cover').classList.add('done'); document.body.classList.remove('locked'); document.body.classList.add('ready'); }
 $('#openBtn').addEventListener('click', () => {
   if(opened) return; opened = true;
+  const song = $('#song'), snd = $('#snd');
+  song.volume = 0.85; song.play().then(() => { snd.hidden = false; }).catch(() => { snd.hidden = false; snd.classList.add('muted'); });
   const c = $('#cover');
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){ finish(); return; }
   c.classList.add('untie');
   setTimeout(() => c.classList.add('open'), 1900);
   setTimeout(() => c.classList.add('zoom'), 4000);
   setTimeout(finish, 5500);
+});
+
+$('#snd').addEventListener('click', () => {
+  const song = $('#song'), snd = $('#snd');
+  if(song.paused){ song.play(); snd.classList.remove('muted'); snd.setAttribute('aria-label','Pausar música'); }
+  else { song.pause(); snd.classList.add('muted'); snd.setAttribute('aria-label','Reproducir música'); }
 });
 
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
