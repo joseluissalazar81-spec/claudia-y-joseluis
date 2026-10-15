@@ -143,6 +143,8 @@ body.ready #inicio .hc>:nth-child(6){transition-delay:.8s}
   font:600 .66rem var(--serif);letter-spacing:.3em;text-transform:uppercase;text-decoration:none;transition:background .2s}
 .btn:hover{background:var(--slate-d)}
 .btn.ghost{background:transparent;color:var(--slate-ink);box-shadow:inset 0 0 0 1px var(--slate-d)}
+.maps{display:flex;gap:10px;justify-content:center;margin-top:16px}.maps .btn{flex:1;max-width:150px;margin:0;padding:12px 8px;letter-spacing:.22em;text-align:center}
+#calBtn{padding:12px 18px;letter-spacing:.22em;white-space:nowrap}
 .btn.ghost:hover{background:var(--slate);color:var(--on-slate)}
 
 .timeline{display:grid;gap:30px;text-align:left;margin-top:30px;position:relative}
@@ -198,7 +200,7 @@ const CONFIG = {
   fechaLarga: "14 de noviembre, 2026",
   dia: "Sábado · 13:00 hrs",
   mensajeBienvenida: "Con la bendición de Dios y la alegría de nuestras familias, los invitamos a celebrar el inicio de nuestra nueva vida juntos.",
-  ceremonia: { lugar: "Iglesia Viña", hora: "13:00 hrs", direccion: "Calle Ordóñez 256, Maipú, Región Metropolitana", mapa: "https://maps.google.com/?q=Iglesia+Vi%C3%B1a+Calle+Ordo%C3%B1ez+256+Maip%C3%BA+Regi%C3%B3n+Metropolitana" },
+  ceremonia: { lugar: "Iglesia Viña", hora: "13:00 hrs", direccion: "Calle Ordóñez 256, Maipú, Región Metropolitana", mapa: "https://maps.google.com/?q=Iglesia+Vi%C3%B1a+Calle+Ordo%C3%B1ez+256+Maip%C3%BA+Regi%C3%B3n+Metropolitana", waze: "https://waze.com/ul?q=Calle%20Ordo%C3%B1ez%20256%2C%20Maip%C3%BA%2C%20Chile&navigate=yes" },
   coctel: { lugar: "Iglesia Viña", hora: "A continuación de la ceremonia", direccion: "En el mismo recinto" },
   programa: [
     ["13:00", "Ceremonia religiosa", "Comienza puntual en Iglesia Viña."],
@@ -362,7 +364,7 @@ $('#firma').textContent = pair;
 $('#fraseCierre').textContent = C.fraseCierre;
 $('#footNames').textContent = pair;
 const venue = (id, tag, e, map) => $(id).innerHTML = `<p class="eyebrow" style="margin:0;color:var(--gold)">${tag}</p><h3>${e.lugar}</h3><p>${e.hora}<br>${e.direccion}</p>` +
-  (map ? `<a class="btn ghost" href="${e.mapa}" target="_blank" rel="noopener">Cómo llegar</a>` : '');
+  (map ? `<div class="maps"><a class="btn ghost" href="${e.mapa}" target="_blank" rel="noopener">Google Maps</a><a class="btn ghost" href="${e.waze}" target="_blank" rel="noopener">Waze</a></div>` : '');
 venue('#vCeremonia', 'Ceremonia', C.ceremonia, true);
 // agregar al calendario: archivo .ics en iPhone/Mac, Google Calendar en el resto
 (function(){
