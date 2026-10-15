@@ -381,6 +381,8 @@ function tick(){
 tick(); setInterval(tick, 1000);
 
 let opened = false;
+// Descarga la canción apenas abre la página, para que suene sin espera al tocar el moño
+fetch('cancion.mp3').then(r => r.ok ? r.blob() : null).then(b => { if(b && !opened) $('#song').src = URL.createObjectURL(b); }).catch(() => {});
 function finish(){ $('#cover').classList.add('done'); document.body.classList.remove('locked'); document.body.classList.add('ready'); }
 $('#openBtn').addEventListener('click', () => {
   if(opened) return; opened = true;
