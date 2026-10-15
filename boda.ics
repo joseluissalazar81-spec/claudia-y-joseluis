@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Claudia y Jose Luis//Boda//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:boda-claudia-joseluis-20261114@invitacion
+DTSTAMP:20261015T170000Z
+DTSTART:20261114T160000Z
+DTEND:20261114T200000Z
+SUMMARY:Boda Claudia & José Luis
+LOCATION:Iglesia Viña\, Calle Ordóñez 256\, Maipú\, Región Metropolitana
+DESCRIPTION:Ceremonia 13:00 hrs. Cóctel a continuación en el mismo recinto.\nhttps://joseluissalazar81-spec.github.io/invitacion-boda/
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana es la boda de Claudia & José Luis
+END:VALARM
+END:VEVENT
+END:VCALENDAR
