@@ -437,6 +437,17 @@ $('#snd').addEventListener('click', () => {
   else { song.pause(); snd.classList.add('muted'); snd.setAttribute('aria-label','Reproducir música'); }
 });
 
+// si salen de la página (otra app, otra pestaña o bloquean el teléfono) la música se pausa; al volver sigue
+let pausedByHide = false;
+function hideMusic(){ const song = $('#song'); if(!song.paused){ song.pause(); pausedByHide = true; } }
+document.addEventListener('visibilitychange', () => {
+  const song = $('#song');
+  if(document.hidden) hideMusic();
+  else if(pausedByHide){ pausedByHide = false; song.play().catch(() => { $('#snd').classList.add('muted'); }); }
+});
+window.addEventListener('pagehide', hideMusic);
+window.addEventListener('blur', () => { if(document.hidden) hideMusic(); });
+
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
 function buildWaHref(){
   const asiste = document.querySelector('input[name=as]:checked').value, yes = $('#si').checked;
